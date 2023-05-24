@@ -32,8 +32,8 @@ const About = () => {
         <Stack>
           <Heading fontWeight="thin">Information</Heading>
           <Text fontSize="18">
-            1996年生まれ。yuba4という名前で活動しています。現在はワスド株式会社でソフトウェアエンジニアとして働いています。
-            TypeScript React.js React Native GraphQLなどの技術が好きです。
+            1996年生まれ。yuba4という名前で活動しています。
+             TypeScript React.js React Native GraphQLなどの技術が好きです。
             連絡などがあればTwitterやメールなどでお願いします。
           </Text>
         </Stack>

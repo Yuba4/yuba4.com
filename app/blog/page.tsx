@@ -1,24 +1,57 @@
-import Link from "next/link";
-import { getList } from "../../libs/clients";
+// app/pages/index.js
+import { use } from "react";
+import { Suspense } from "react";
+import { Client } from "@notionhq/client";
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-export default async function StaticPage() {
-  const { contents } = await getList();
+const notion = new Client({
+  auth: process.env.NOTION_API_TOKEN,
+});
 
-  if (!contents || contents.length === 0) {
-    return <h1>No contents</h1>;
-  }
+async function getPosts() {
+  const databaseId = process.env.NOTION_DATABASE_ID;
+  const response = await notion.databases.query({
+    database_id: databaseId!,
+  });
 
+  return response.results.map((page) => {
+    const pageObject = page as PageObjectResponse;
+
+    console.log(pageObject);
+
+    return {
+      id: pageObject.id,
+      title:
+        pageObject.properties.title.type === "title"
+          ? pageObject.properties.title.title[0].plain_text
+          : "",
+      published:
+        pageObject.properties.published.type === "checkbox" &&
+        pageObject.properties.published.checkbox,
+    };
+  });
+}
+
+function ArticleList() {
+  const articles = use(getPosts()); // 関数を実行してPromiseを渡す
+  const publishedArticles = articles.filter((article) => article.published);
+  return (
+    <ul>
+      {publishedArticles.map((article) => (
+        <li key={article.id}>
+          <a>{article.title}</a>
+          <a>{article.id}</a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export default function Home() {
   return (
     <div>
-      <ul>
-        {contents.map((post) => {
-          return (
-            <li key={post.id}>
-              <Link href={`/static/${post.id}`}>{post.title}</Link>
-            </li>
-          );
-        })}
-      </ul>
+      <h1>My Blog</h1>
+      <ArticleList />
     </div>
   );
 }
