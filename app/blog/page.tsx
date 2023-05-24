@@ -16,6 +16,7 @@ async function getPosts() {
   });
 
   return response.results.map((page) => {
+    // PartialPageObjectResponseの型に持っていかれてしまうので型アサーションをしている
     const pageObject = page as PageObjectResponse;
 
     console.log(pageObject);
