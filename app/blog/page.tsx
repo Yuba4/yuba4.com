@@ -1,6 +1,7 @@
 // app/pages/index.js
 import { use } from "react";
 import { Suspense } from "react";
+import Link from "next/link";
 import { Client } from "@notionhq/client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
@@ -39,8 +40,10 @@ function ArticleList() {
     <ul>
       {publishedArticles.map((article) => (
         <li key={article.id}>
-          <a>{article.title}</a>
-          <a>{article.id}</a>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Link href={`/blog/${article.id}`}>{article.title}</Link>
+            <a>{article.id}</a>
+          </Suspense>
         </li>
       ))}
     </ul>
