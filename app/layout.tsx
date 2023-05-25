@@ -10,9 +10,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <ChakraProvider theme={theme}>
-          <div>{children}</div>
-        </ChakraProvider>
+        <div>{children}</div>
       </body>
     </html>
   );

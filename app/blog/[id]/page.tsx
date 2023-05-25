@@ -1,9 +1,10 @@
-import Link from "next/link";
+import { use } from "react";
 
-export default function BlogPost() {
-  return (
-    <div>
-      <h1>Post1</h1>
-    </div>
-  );
+import ReactMarkdown from "react-markdown";
+import { getPost } from "../../api/getPost";
+
+export default function BlogPost({ params }: { params: { id: string } }) {
+  const markdown = use(getPost(params.id));
+
+  return <ReactMarkdown>{markdown}</ReactMarkdown>;
 }
