@@ -1,6 +1,6 @@
-"use client";
-import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "../libs/theme";
+import "../styles/global.css";
+
+import { LayoutWrapper } from "./components";
 
 export default function RootLayout({
   children,
@@ -10,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
-        <div>{children}</div>
+        <div>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </div>
       </body>
     </html>
   );

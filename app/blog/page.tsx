@@ -1,21 +1,40 @@
-// app/pages/index.js
-import { use, useMemo } from "react";
+import { formatDate } from "../libs/formatDate";
 
-import { getPosts } from "../api";
-import { ArticleList } from "./components/ArticleList";
+import { getPosts } from "../libs/client";
 
-export default function Home() {
-  // dataFetch
-  const articles = use(getPosts());
+import Link from "next/link";
 
-  const publishedArticles = useMemo(() => {
-    return articles.filter((article) => article.published);
-  }, [articles]);
+export const revalidate = 3;
+
+type BlogPost = {
+  id: string;
+  title: string;
+  content: string;
+  publishedAt: string;
+};
+
+export default async function Home() {
+  const data = await getPosts();
+  console.log(data);
 
   return (
-    <div>
-      <h1>My Blog</h1>
-      <ArticleList articles={publishedArticles} />
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">記事一覧</h1>
+      <div className="flex flex-col">
+        {data.contents.map((blog: BlogPost) => (
+          <div key={blog.id} className="mb-4 flex flex-col">
+            <span className="text-gray-600 mb-1">
+              {formatDate(blog.publishedAt)}
+            </span>
+            <Link
+              className="text-2xl text-blue-500 hover:underline"
+              href={`/blog/${blog.id}`}
+            >
+              {blog.title}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
