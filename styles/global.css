@@ -16,7 +16,7 @@
     @apply text-xl;
   }
   p {
-    @apply text-xl leading-normal;
+    @apply text-xl leading-normal mt-2;
   }
 
   ul {
