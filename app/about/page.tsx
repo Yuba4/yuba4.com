@@ -39,7 +39,7 @@ const About = () => {
         <ul className="pl-4">
           <li>
             <button className="text-blue-500 hover:underline">
-              <a href="https://twitter.com/yuba_4">Twitter @yuba040</a>
+              <a href="https://twitter.com/yuba_4">Twitter @yuba_4</a>
             </button>
           </li>
 
